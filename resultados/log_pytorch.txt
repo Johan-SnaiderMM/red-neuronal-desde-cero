@@ -1,0 +1,22 @@
+época  1/20  pérdida entrenamiento 0.3355  validación 0.1850  precisión validación 94.48 %
+época  2/20  pérdida entrenamiento 0.1400  validación 0.1352  precisión validación 96.16 %
+época  3/20  pérdida entrenamiento 0.0976  validación 0.1239  precisión validación 96.50 %
+época  4/20  pérdida entrenamiento 0.0742  validación 0.1000  precisión validación 97.26 %
+época  5/20  pérdida entrenamiento 0.0575  validación 0.1044  precisión validación 97.02 %
+época  6/20  pérdida entrenamiento 0.0473  validación 0.0926  precisión validación 97.40 %
+época  7/20  pérdida entrenamiento 0.0376  validación 0.0911  precisión validación 97.60 %
+época  8/20  pérdida entrenamiento 0.0323  validación 0.0913  precisión validación 97.34 %
+época  9/20  pérdida entrenamiento 0.0268  validación 0.0973  precisión validación 97.70 %
+época 10/20  pérdida entrenamiento 0.0211  validación 0.0876  precisión validación 97.54 %
+época 11/20  pérdida entrenamiento 0.0179  validación 0.1013  precisión validación 97.44 %
+época 12/20  pérdida entrenamiento 0.0153  validación 0.0918  precisión validación 97.68 %
+época 13/20  pérdida entrenamiento 0.0125  validación 0.1090  precisión validación 97.74 %
+época 14/20  pérdida entrenamiento 0.0149  validación 0.1068  precisión validación 97.52 %
+época 15/20  pérdida entrenamiento 0.0099  validación 0.1112  precisión validación 97.30 %
+época 16/20  pérdida entrenamiento 0.0096  validación 0.1087  precisión validación 97.66 %
+época 17/20  pérdida entrenamiento 0.0075  validación 0.1087  precisión validación 97.74 %
+época 18/20  pérdida entrenamiento 0.0084  validación 0.1131  precisión validación 97.50 %
+época 19/20  pérdida entrenamiento 0.0089  validación 0.1258  precisión validación 97.68 %
+época 20/20  pérdida entrenamiento 0.0090  validación 0.1065  precisión validación 97.96 %
+
+PRUEBA: precisión 97.76 %  pérdida 0.1048  [225 s]

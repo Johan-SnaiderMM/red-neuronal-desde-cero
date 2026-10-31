@@ -1,0 +1,4 @@
+# Solo para descargar MNIST y para la comparación con PyTorch (scripts/descargar_mnist.py y scripts/entrenar_pytorch.py)
+-r requirements.txt
+torch>=2.5
+torchvision>=0.20

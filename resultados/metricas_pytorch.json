@@ -1,0 +1,91 @@
+{
+  "nombre": "pytorch",
+  "arquitectura": [
+    784,
+    128,
+    64,
+    10
+  ],
+  "parametros": 109386,
+  "optimizador": "Adam(lr=0.001)",
+  "epocas": 20,
+  "lote": 128,
+  "semilla": 42,
+  "aumento_de_datos": false,
+  "segundos_de_entrenamiento": 225.3,
+  "precision_prueba": 0.9776,
+  "perdida_prueba": 0.1048,
+  "por_clase": [
+    {
+      "clase": 0,
+      "precision": 0.9818,
+      "recall": 0.9898,
+      "f1": 0.9858,
+      "soporte": 980
+    },
+    {
+      "clase": 1,
+      "precision": 0.9929,
+      "recall": 0.985,
+      "f1": 0.9889,
+      "soporte": 1135
+    },
+    {
+      "clase": 2,
+      "precision": 0.9804,
+      "recall": 0.969,
+      "f1": 0.9747,
+      "soporte": 1032
+    },
+    {
+      "clase": 3,
+      "precision": 0.9686,
+      "recall": 0.9762,
+      "f1": 0.9724,
+      "soporte": 1010
+    },
+    {
+      "clase": 4,
+      "precision": 0.9786,
+      "recall": 0.9776,
+      "f1": 0.9781,
+      "soporte": 982
+    },
+    {
+      "clase": 5,
+      "precision": 0.9743,
+      "recall": 0.9787,
+      "f1": 0.9765,
+      "soporte": 892
+    },
+    {
+      "clase": 6,
+      "precision": 0.9905,
+      "recall": 0.9812,
+      "f1": 0.9858,
+      "soporte": 958
+    },
+    {
+      "clase": 7,
+      "precision": 0.9664,
+      "recall": 0.9805,
+      "f1": 0.9734,
+      "soporte": 1028
+    },
+    {
+      "clase": 8,
+      "precision": 0.9801,
+      "recall": 0.963,
+      "f1": 0.9715,
+      "soporte": 974
+    },
+    {
+      "clase": 9,
+      "precision": 0.9618,
+      "recall": 0.9742,
+      "f1": 0.968,
+      "soporte": 1009
+    }
+  ],
+  "torch": "2.15.0+cpu"
+}

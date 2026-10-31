@@ -1,0 +1,4 @@
+# Núcleo del proyecto (la red hecha a mano solo necesita NumPy)
+numpy>=2.0
+matplotlib>=3.9
+pytest>=8.0

@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/*
+ * Paleta sobria con el acento verde azulado del banner del perfil. Los pares texto/fondo cumplen contraste AA
+ * (tinta-2 sobre papel ≥ 4.5:1) tanto en claro como en oscuro; el modo oscuro sigue al sistema.
+ */
+@theme {
+  --color-tinta: #0f172a;
+  --color-tinta-2: #475569;
+  --color-papel: #f8fafc;
+  --color-superficie: #ffffff;
+  --color-linea: #cbd5e1;
+  --color-acento: #0f766e;
+  --color-aviso: #b45309;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+
+:root {
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --color-tinta: #f1f5f9;
+    --color-tinta-2: #a3b1c6;
+    --color-papel: #0b1220;
+    --color-superficie: #111a2e;
+    --color-linea: #2a3853;
+    --color-acento: #2dd4bf;
+    --color-aviso: #fbbf24;
+  }
+}
+
+html {
+  background: var(--color-papel);
+}
+
+body {
+  background: var(--color-papel);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Foco visible para quien navega con teclado. */
+:focus-visible {
+  outline: 3px solid var(--color-acento);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -1,0 +1,25 @@
+entrenamiento 55000 · validación 5000 · prueba 10000
+red 784-128-64-10 con 109,386 parámetros · aumento de datos: no
+época  1/20  pérdida entrenamiento 0.3381  validación 0.1900  precisión validación 94.44 %  (13.6 s)
+época  2/20  pérdida entrenamiento 0.1403  validación 0.1366  precisión validación 95.72 %  (18.5 s)
+época  3/20  pérdida entrenamiento 0.0979  validación 0.1066  precisión validación 97.10 %  (17.0 s)
+época  4/20  pérdida entrenamiento 0.0758  validación 0.1040  precisión validación 97.04 %  (17.0 s)
+época  5/20  pérdida entrenamiento 0.0590  validación 0.0892  precisión validación 97.40 %  (15.7 s)
+época  6/20  pérdida entrenamiento 0.0470  validación 0.0910  precisión validación 97.22 %  (16.5 s)
+época  7/20  pérdida entrenamiento 0.0377  validación 0.0849  precisión validación 97.38 %  (14.1 s)
+época  8/20  pérdida entrenamiento 0.0301  validación 0.0951  precisión validación 97.48 %  (14.8 s)
+época  9/20  pérdida entrenamiento 0.0250  validación 0.0929  precisión validación 97.60 %  (14.2 s)
+época 10/20  pérdida entrenamiento 0.0233  validación 0.0966  precisión validación 97.52 %  (14.5 s)
+época 11/20  pérdida entrenamiento 0.0161  validación 0.0908  precisión validación 97.62 %  (14.6 s)
+época 12/20  pérdida entrenamiento 0.0141  validación 0.0888  precisión validación 97.68 %  (15.5 s)
+época 13/20  pérdida entrenamiento 0.0128  validación 0.1004  precisión validación 97.66 %  (14.1 s)
+época 14/20  pérdida entrenamiento 0.0119  validación 0.1147  precisión validación 97.56 %  (15.0 s)
+época 15/20  pérdida entrenamiento 0.0116  validación 0.1071  precisión validación 97.46 %  (14.7 s)
+época 16/20  pérdida entrenamiento 0.0083  validación 0.1040  precisión validación 97.74 %  (15.7 s)
+época 17/20  pérdida entrenamiento 0.0070  validación 0.1070  precisión validación 97.78 %  (14.7 s)
+época 18/20  pérdida entrenamiento 0.0104  validación 0.1345  precisión validación 97.30 %  (15.4 s)
+época 19/20  pérdida entrenamiento 0.0055  validación 0.1316  precisión validación 97.60 %  (15.5 s)
+época 20/20  pérdida entrenamiento 0.0073  validación 0.1402  precisión validación 97.00 %  (14.6 s)
+
+PRUEBA (10 000 imágenes que la red nunca vio): precisión 97.58 %  pérdida 0.1124  [306 s]
+Resultados en resultados/

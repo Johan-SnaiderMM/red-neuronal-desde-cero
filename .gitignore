@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# datos descargados (MNIST): se bajan con scripts/descargar_mnist.py
+data/
+
+# sistema
+.DS_Store
+Thumbs.db

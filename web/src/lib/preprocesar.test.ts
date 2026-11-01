@@ -45,6 +45,18 @@ describe("prepararDigito", () => {
     expect(diferencia / a.length).toBeLessThan(0.02);
   });
 
+  it("nunca produce NaN con recortes ajustados al borde (regresión: leía una fila o columna de más)", () => {
+    // Un recorte de tamaño cualquiera lleno de tinta: ningún valor de salida puede ser NaN ni salirse de 0..1.
+    let malos = 0;
+    for (let ancho = 15; ancho <= 260; ancho += 7) {
+      for (let alto = 15; alto <= 260; alto += 11) {
+        const salida = prepararDigito(new Float32Array(ancho * alto).fill(1), ancho, alto)!;
+        for (const v of salida) if (!Number.isFinite(v) || v < 0 || v > 1.0000001) malos++;
+      }
+    }
+    expect(malos).toBe(0);
+  });
+
   it("el promedio por área conserva la intensidad media", () => {
     const origen = Float32Array.from({ length: 16 }, (_, i) => (i % 2 === 0 ? 1 : 0));
     const reducida = remuestrearPorArea(origen, 4, { izquierda: 0, arriba: 0, ancho: 4, alto: 4 }, 2, 2);

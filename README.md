@@ -1,8 +1,8 @@
 # Red neuronal desde cero
 
-Una red neuronal que reconoce dígitos escritos a mano, con la **retropropagación escrita a mano usando solo NumPy** (sin PyTorch ni TensorFlow), y una demo web donde dibujas un número y la misma red lo reconoce **en tu navegador**, sin servidor.
+Una red neuronal que reconoce dígitos escritos a mano, con la **retropropagación escrita a mano usando solo NumPy** (sin PyTorch ni TensorFlow), y una demo web donde escribes un número, de uno o de varios dígitos, y la misma red lo lee **en tu navegador**, sin servidor.
 
-**Demo:** https://red-neuronal-desde-cero.vercel.app · dibuja con el dedo o el mouse.
+**Demo:** https://red-neuronal-desde-cero.vercel.app · escribe con el dedo o el mouse (un dígito o varios, separados entre sí).
 
 ![Tarjeta del proyecto](web/public/icons/og.png)
 
@@ -44,6 +44,26 @@ dL/dW = xᵀ · dL/dy        dL/db = Σ_lote dL/dy        dL/dx = dL/dy · Wᵀ
 3. **Comparación con PyTorch** (`scripts/entrenar_pytorch.py`): la misma arquitectura, inicialización, optimizador y datos.
 4. **Paridad Python ↔ navegador** (`web/src/lib/red.test.ts`, Vitest): la red en TypeScript da los mismos logits que NumPy sobre 10 imágenes de prueba (hasta 3 decimales) y elige la misma clase.
 5. **Preprocesamiento de la demo** (`web/src/lib/preprocesar.test.ts`): el dibujo se encuadra en 20×20 y se centra por centro de masa, como MNIST; una prueba amplía dígitos de prueba, los desplaza en un lienzo grande y comprueba que la red los siga reconociendo.
+6. **Lectura de varios dígitos** (`web/src/lib/segmentar.test.ts` y `numero.test.ts`): la red sigue leyendo un dígito a la vez; antes se parte el dibujo en trazos continuos (componentes conexos con 8 vecinos), se unen los que se solapan en horizontal (la raya de un 4) y se descartan las manchas pequeñas. Las pruebas cubren el orden de izquierda a derecha, los dígitos de varios trazos, el ruido, que un vecino dentro de la caja no contamine el recorte, que un solo dígito dé lo mismo que antes y que se avise cuando hay dígitos pegados. Además, `web/src/lib/secuencias.test.ts` mide la tubería completa (segmentación + red) con **secuencias sintéticas** (ver más abajo).
+
+## Varios dígitos: qué se midió y qué no
+
+La red lee un dígito a la vez; para leer un número hay que partir el dibujo antes. Para medir esa parte armé **600 secuencias sintéticas** de 2 a 6 dígitos con imágenes de la **prueba de MNIST** (las que la red nunca vio al entrenar), ampliadas de 3× a 9× según quepan, con altura al azar, en un lienzo de 840×280 y **sin tocarse**. Semilla fija, así que es reproducible (`npm test` dentro de `web/` con MNIST descargado).
+
+| Trazo | Bien separadas | Dígitos leídos bien | Número completo bien |
+|---|---|---|---|
+| Como el de MNIST | 98,0 % | 94,8 % | 86,5 % |
+| 1,3 veces más grueso (parecido al lápiz de la demo) | 98,0 % | 94,2 % | 84,3 % |
+| 1,8 veces más grueso (prueba de estrés) | 99,7 % | 93,5 % | 76,8 % |
+
+Con trazo como el de MNIST, el número completo acierta 95,0 % en secuencias de 2 dígitos, 87,5 % en 3 y 4, 81,7 % en 5 y 80,8 % en 6. Un dígito aislado acierta 98,1 % por esta tubería frente a 98,2 % de la red sola (2 000 imágenes de prueba al azar).
+
+Cómo leer estas cifras:
+- **Son sintéticas.** Miden segmentación + lectura con dígitos de MNIST puestos uno al lado del otro, no escritura real de personas con el dedo. No sirven para afirmar «reconoce números escritos a mano» con ese porcentaje.
+- «Dígitos leídos bien» **no cuenta** como acierto un dígito marcado como «pegado», aunque la red lo hubiera adivinado. Esas falsas alarmas son ~1,4 % de los dígitos: MNIST trae dígitos muy achatados (un «5» de 20×14 píxeles, un «6» casi acostado) que superan la regla «más ancho que alto». En una prueba con 20 000 parejas de dígitos pegados, esa regla avisa en el 84 %.
+- El resto de las pérdidas viene de trazos finos de MNIST que se parten al ampliar (un «1» fino queda en dos trozos) y de la propia red (≈ 2 %).
+- Los dígitos pegados quedan fuera: aquí nunca se tocan.
+- Falta una medición con escritura real hecha en la demo.
 
 ## Cómo reproducirlo
 
@@ -63,7 +83,8 @@ python scripts/entrenar_pytorch.py                         # comparación
 
 python scripts/exportar_web.py                             # pesos → web/public/modelo.json
 cd web && npm install && npm run dev                       # demo en http://localhost:3000
-npm run verificar                                          # lint + tipos + pruebas de la demo
+npm run verificar                                          # lint + tipos + pruebas de la demo (con MNIST descargado también corre la
+                                                           # evaluación de secuencias, ≈ 45 s; sin MNIST esa parte se salta)
 ```
 
 Cada entrenamiento tarda unos 4 a 7 minutos en un portátil sin GPU.
@@ -75,13 +96,16 @@ redneuronal/      capas.py (backward a mano) · red.py · optimizadores.py (SGD,
 scripts/          descargar_mnist · verificar_gradientes · entrenar_numpy · entrenar_pytorch · exportar_web
 tests/            pytest
 resultados/       métricas, curvas, matrices de confusión, registros y el modelo entrenado (.npz)
-web/              demo en Next.js 16 + TypeScript + Tailwind; la red corre en el navegador (src/lib/red.ts)
+web/              demo en Next.js 16 + TypeScript + Tailwind; la red corre en el navegador (src/lib/red.ts); la lectura de varios dígitos está en src/lib/segmentar.ts y numero.ts
 ```
 
 ## Límites
 
 - Solo reconoce dígitos del 0 al 9: si dibujas otra cosa, responde igual con un dígito.
 - Se entrenó con MNIST (dígitos centrados, un solo estilo de captura); con dibujos muy distintos del estilo MNIST puede fallar.
+- La red lee **un dígito por imagen**. En un número, los dígitos tienen que ir **separados**: si se tocan forman un solo trazo y el programa no puede partirlos. Avisa cuando la caja es mucho más ancha que alta, pero dos dígitos angostos pegados (por ejemplo dos «1») pueden pasar por uno solo.
+- La segmentación une los trazos que se solapan en horizontal; dos dígitos muy inclinados cuyos trazos se solapen en esa dirección podrían fundirse en uno.
+- Lee hasta unos 6 dígitos en pantallas grandes y unos 4 en celular; la precisión de 98,09 % es para un dígito aislado de MNIST, no para números completos escritos a mano (ver la tabla de arriba: con secuencias sintéticas el número completo acierta entre 80 y 95 % según el largo).
 - La demo acierta mejor con trazos grandes y de un solo golpe.
 
 ## Datos y licencias
@@ -89,4 +113,4 @@ web/              demo en Next.js 16 + TypeScript + Tailwind; la red corre en el
 - Código: MIT.
 - MNIST: Yann LeCun, Corinna Cortes y Christopher J.C. Burges, CC BY-SA 3.0. Se descarga con `scripts/descargar_mnist.py`; no está en el repositorio.
 
-Hecho por [Johan Moreno](https://github.com/Johan-SnaiderMM), estudiante de Ingeniería de Sistemas.
+Hecho por [Johan Moreno](https://github.com/Johan-SnaiderMM), Ingeniero de Sistemas.

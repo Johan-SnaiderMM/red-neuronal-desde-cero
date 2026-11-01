@@ -7,7 +7,7 @@
 export const LADO = 28;
 export const CAJA = 20;
 /** Intensidad mínima (0-1) para considerar que un píxel del lienzo tiene tinta. */
-const UMBRAL_TINTA = 0.08;
+export const UMBRAL_TINTA = 0.08;
 
 export interface Caja {
   izquierda: number;
@@ -45,6 +45,7 @@ export function remuestrearPorArea(
   destAlto: number,
 ): Float32Array {
   const destino = new Float32Array(destAncho * destAlto);
+  const altoOrigen = origen.length / anchoOrigen;
   const pasoX = caja.ancho / destAncho;
   const pasoY = caja.alto / destAlto;
   for (let dy = 0; dy < destAlto; dy++) {
@@ -55,8 +56,11 @@ export function remuestrearPorArea(
       const x1 = x0 + pasoX;
       let suma = 0;
       for (let sy = Math.floor(y0); sy < Math.ceil(y1); sy++) {
+        // Por redondeo de decimales, `ceil(y1)` puede pasarse una fila (o columna) del borde de la imagen: lo de afuera es fondo.
+        if (sy >= altoOrigen) continue;
         const pesoY = Math.min(sy + 1, y1) - Math.max(sy, y0);
         for (let sx = Math.floor(x0); sx < Math.ceil(x1); sx++) {
+          if (sx >= anchoOrigen) continue;
           const pesoX = Math.min(sx + 1, x1) - Math.max(sx, x0);
           suma += origen[sy * anchoOrigen + sx] * pesoX * pesoY;
         }
